@@ -1,0 +1,20 @@
+<svg width="600" height="120" viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hexagon mark -->
+  <g transform="translate(20, 10)">
+    <polygon points="52,0 84,19 84,57 52,76 20,57 20,19" fill="#1a4a1a" stroke="#f5c518" stroke-width="2.5"/>
+    <polygon points="52,10 76,25 76,55 52,70 28,55 28,25" fill="#2a6b2a"/>
+    <circle cx="38" cy="32" r="6" fill="white"/>
+    <circle cx="52" cy="50" r="6" fill="white"/>
+    <circle cx="68" cy="35" r="6" fill="white"/>
+    <line x1="38" y1="32" x2="52" y2="50" stroke="#f5c518" stroke-width="2" stroke-dasharray="4,3"/>
+    <line x1="52" y1="50" x2="68" y2="35" stroke="#f5c518" stroke-width="2" stroke-dasharray="4,3"/>
+    <circle cx="38" cy="29" r="2.5" fill="#1a4a1a"/>
+    <circle cx="52" cy="47" r="2.5" fill="#1a4a1a"/>
+    <circle cx="68" cy="32" r="2.5" fill="#1a4a1a"/>
+    <polygon points="68,26 76,35 60,35" fill="#f5c518"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="120" y="58" font-family="'Segoe UI',Arial,sans-serif" font-size="52" font-weight="700" fill="#1a4a1a" letter-spacing="-1">Turf<tspan fill="#2a6b2a">Wize</tspan></text>
+  <text x="122" y="78" font-family="'Segoe UI',Arial,sans-serif" font-size="13" fill="#555" letter-spacing="3">SMARTER LAWN CARE</text>
+  <line x1="122" y1="88" x2="580" y2="88" stroke="#f5c518" stroke-width="2.5"/>
+</svg>
