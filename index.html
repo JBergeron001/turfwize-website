@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TurfWize — Smarter Lawn Care Management</title>
+<meta name="description" content="TurfWize is the all-in-one lawn care business management app. Route optimization, crew tracking, smart maps, invoicing, and AI-powered insights.">
+<style>
+  :root {
+    --green-dark: #1a4a1a;
+    --green-main: #2a6b2a;
+    --green-mid: #3a8a3a;
+    --green-light: #e8f5e8;
+    --green-stripe: #2f752f;
+    --gold: #f5c518;
+    --blue-dark: #1a4fa0;
+    --white: #ffffff;
+    --off-white: #f9fafb;
+    --text: #1a1a1a;
+    --text-mid: #444;
+    --text-light: #777;
+    --border: #e0e0e0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); background: var(--white); }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--green-dark);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    border-bottom: 2px solid var(--green-main);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--green-main);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 900; color: var(--gold); font-family: Georgia, serif;
+  }
+  .nav-logo-text { font-size: 20px; font-weight: 700; color: white; letter-spacing: -0.5px; }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; transition: color .2s; }
+  .nav-links a:hover { color: white; }
+  .nav-cta {
+    background: var(--gold); color: var(--green-dark);
+    padding: 8px 20px; border-radius: 6px;
+    font-weight: 700; font-size: 14px; text-decoration: none;
+    transition: background .2s;
+  }
+  .nav-cta:hover { background: #e6b800; }
+
+  /* HERO */
+  .hero {
+    background: var(--green-dark);
+    padding: 80px 5% 90px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero-stripes {
+    position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(
+      180deg,
+      transparent 0px, transparent 60px,
+      rgba(255,255,255,0.03) 60px, rgba(255,255,255,0.03) 120px
+    );
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(245,197,24,0.15);
+    border: 1px solid rgba(245,197,24,0.4);
+    color: var(--gold);
+    font-size: 12px; font-weight: 600;
+    padding: 4px 14px; border-radius: 20px;
+    margin-bottom: 20px; letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 800; color: white;
+    line-height: 1.1; letter-spacing: -1px;
+    margin-bottom: 20px;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero p {
+    font-size: 18px; color: rgba(255,255,255,0.75);
+    max-width: 580px; margin: 0 auto 36px;
+    line-height: 1.6;
+  }
+  .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold); color: var(--green-dark);
+    padding: 14px 32px; border-radius: 8px;
+    font-weight: 700; font-size: 16px; text-decoration: none;
+    transition: background .2s, transform .1s;
+  }
+  .btn-primary:hover { background: #e6b800; transform: translateY(-1px); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 14px 32px; border-radius: 8px;
+    font-weight: 600; font-size: 16px; text-decoration: none;
+    transition: background .2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.18); }
+  .hero-note { margin-top: 16px; font-size: 13px; color: rgba(255,255,255,0.45); }
+
+  /* LOGOS / TRUST */
+  .trust-bar {
+    background: var(--off-white);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 5%;
+    text-align: center;
+  }
+  .trust-bar p { font-size: 13px; color: var(--text-light); margin-bottom: 10px; }
+  .trust-items { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+  .trust-item { font-size: 13px; font-weight: 600; color: var(--text-mid); display: flex; align-items: center; gap: 6px; }
+  .trust-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green-main); }
+
+  /* SECTIONS */
+  section { padding: 80px 5%; }
+  .section-label { font-size: 12px; font-weight: 700; color: var(--green-main); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+  .section-title { font-size: clamp(26px, 3.5vw, 40px); font-weight: 800; color: var(--text); letter-spacing: -0.5px; margin-bottom: 16px; }
+  .section-sub { font-size: 17px; color: var(--text-light); max-width: 560px; line-height: 1.6; }
+  .centered { text-align: center; }
+  .centered .section-sub { margin: 0 auto; }
+
+  /* FEATURES */
+  .features { background: var(--white); }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px; margin-top: 48px;
+  }
+  .feature-card {
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    transition: border-color .2s, transform .2s;
+  }
+  .feature-card:hover { border-color: var(--green-main); transform: translateY(-2px); }
+  .feature-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--green-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 16px;
+  }
+  .feature-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+  .feature-card p { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+
+  /* HOW IT WORKS */
+  .how { background: var(--green-light); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px; margin-top: 48px;
+  }
+  .step { text-align: center; }
+  .step-num {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--green-main); color: white;
+    font-size: 20px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .step h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .step p { font-size: 14px; color: var(--text-mid); line-height: 1.6; }
+
+  /* AI SECTION */
+  .ai-section {
+    background: var(--green-dark);
+    color: white;
+  }
+  .ai-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+    margin-top: 48px;
+  }
+  .ai-grid .section-title { color: white; }
+  .ai-grid .section-sub { color: rgba(255,255,255,0.7); }
+  .ai-features { margin-top: 28px; display: flex; flex-direction: column; gap: 16px; }
+  .ai-feature { display: flex; gap: 14px; align-items: flex-start; }
+  .ai-feature-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(245,197,24,0.15);
+    border: 1px solid rgba(245,197,24,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .ai-feature h4 { font-size: 15px; font-weight: 600; color: white; margin-bottom: 4px; }
+  .ai-feature p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+  .ai-chat-demo {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px; padding: 24px;
+  }
+  .chat-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .chat-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--green-main); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .chat-name { font-size: 14px; font-weight: 600; color: white; }
+  .chat-sub { font-size: 11px; color: rgba(255,255,255,0.5); }
+  .chat-msg { margin-bottom: 12px; }
+  .chat-bubble-user {
+    background: var(--green-main); color: white;
+    padding: 10px 14px; border-radius: 12px 12px 4px 12px;
+    font-size: 13px; display: inline-block; max-width: 85%; float: right; clear: both;
+  }
+  .chat-bubble-ai {
+    background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.9);
+    padding: 10px 14px; border-radius: 12px 12px 12px 4px;
+    font-size: 13px; display: inline-block; max-width: 85%; float: left; clear: both;
+    line-height: 1.5;
+  }
+  .clearfix { clear: both; }
+
+  /* PRICING */
+  .pricing { background: var(--off-white); }
+  .billing-toggle {
+    display: flex; align-items: center; gap: 14px;
+    justify-content: center; margin: 32px 0;
+  }
+  .toggle-opt { font-size: 15px; color: var(--text-light); cursor: pointer; transition: color .2s; }
+  .toggle-opt.active { color: var(--text); font-weight: 600; }
+  .toggle-switch {
+    width: 52px; height: 28px; border-radius: 28px;
+    background: var(--green-main); cursor: pointer;
+    position: relative; transition: background .2s;
+  }
+  .toggle-switch::after {
+    content: ''; position: absolute;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: white; top: 3px; left: 3px;
+    transition: transform .2s;
+  }
+  .toggle-switch.annual::after { transform: translateX(24px); }
+  .save-pill {
+    background: var(--green-light); color: var(--green-dark);
+    font-size: 12px; font-weight: 700;
+    padding: 2px 10px; border-radius: 20px;
+  }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px; max-width: 980px; margin: 0 auto;
+  }
+  .plan-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px 28px;
+    display: flex; flex-direction: column;
+    transition: transform .2s;
+  }
+  .plan-card:hover { transform: translateY(-3px); }
+  .plan-card.popular {
+    border: 2px solid var(--green-main);
+    position: relative;
+  }
+  .popular-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--green-main); color: white;
+    font-size: 11px; font-weight: 700;
+    padding: 4px 16px; border-radius: 20px;
+    white-space: nowrap;
+  }
+  .plan-name { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+  .plan-desc { font-size: 13px; color: var(--text-light); margin-bottom: 20px; }
+  .plan-price { font-size: 42px; font-weight: 800; color: var(--green-dark); line-height: 1; }
+  .plan-price sup { font-size: 20px; vertical-align: top; margin-top: 8px; }
+  .plan-price sub { font-size: 15px; font-weight: 400; color: var(--text-light); }
+  .plan-annual-note { font-size: 12px; color: var(--text-light); margin: 6px 0 24px; min-height: 18px; }
+  .plan-divider { border: none; border-top: 1px solid var(--border); margin: 0 0 20px; }
+  .plan-feature { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-mid); margin-bottom: 10px; }
+  .plan-check { width: 18px; height: 18px; border-radius: 50%; background: var(--green-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .plan-check::after { content: '✓'; font-size: 11px; color: var(--green-main); font-weight: 700; }
+  .plan-cta {
+    display: block; text-align: center;
+    background: var(--green-main); color: white;
+    padding: 13px; border-radius: 8px;
+    font-weight: 700; font-size: 15px; text-decoration: none;
+    margin-top: auto; margin-top: 24px;
+    transition: background .2s;
+  }
+  .plan-cta:hover { background: var(--green-dark); }
+  .plan-card.popular .plan-cta { background: var(--green-dark); }
+  .pricing-note { text-align: center; margin-top: 28px; font-size: 13px; color: var(--text-light); }
+  .pricing-note a { color: var(--green-main); text-decoration: none; }
+
+  /* TRIAL SECTION */
+  .trial-section {
+    background: var(--green-main);
+    text-align: center; padding: 60px 5%;
+  }
+  .trial-section h2 { font-size: 32px; font-weight: 800; color: white; margin-bottom: 12px; }
+  .trial-section p { font-size: 17px; color: rgba(255,255,255,0.8); margin-bottom: 28px; }
+  .trial-features { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+  .trial-feature { display: flex; align-items: center; gap: 8px; font-size: 14px; color: rgba(255,255,255,0.9); }
+  .trial-check { color: var(--gold); font-size: 16px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--green-dark);
+    padding: 40px 5% 24px;
+  }
+  .footer-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 32px; margin-bottom: 32px; }
+  .footer-brand .nav-logo-text { font-size: 22px; }
+  .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 8px; max-width: 240px; line-height: 1.6; }
+  .footer-links h4 { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+  .footer-links a { display: block; font-size: 14px; color: rgba(255,255,255,0.7); text-decoration: none; margin-bottom: 8px; transition: color .2s; }
+  .footer-links a:hover { color: white; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.4); }
+
+  /* RESPONSIVE */
+  @media(max-width: 768px) {
+    .nav-links { display: none; }
+    .ai-grid { grid-template-columns: 1fr; }
+    .footer-top { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">T</div>
+    <span class="nav-logo-text">TurfWize</span>
+  </a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#how">How it works</a>
+    <a href="#ai">AI</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#trial" class="nav-cta">Start Free Trial</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-stripes"></div>
+  <div class="hero-badge">Now with AI-powered insights</div>
+  <h1>Run your lawn care business<br><span>smarter, not harder</span></h1>
+  <p>TurfWize is the all-in-one app for lawn care professionals. Manage crews, optimize routes, track jobs, send invoices, and get AI-powered insights — all from your phone.</p>
+  <div class="hero-buttons">
+    <a href="#trial" class="btn-primary">Start Free 14-Day Trial</a>
+    <a href="#features" class="btn-secondary">See Features</a>
+  </div>
+  <p class="hero-note">No credit card required &nbsp;·&nbsp; 1 client, 1 job site free &nbsp;·&nbsp; Cancel anytime</p>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <p>Built for lawn care professionals</p>
+  <div class="trust-items">
+    <div class="trust-item"><div class="trust-dot"></div>Route Optimization</div>
+    <div class="trust-item"><div class="trust-dot"></div>GPS Crew Tracking</div>
+    <div class="trust-item"><div class="trust-dot"></div>Smart Property Maps</div>
+    <div class="trust-item"><div class="trust-dot"></div>AI Business Insights</div>
+    <div class="trust-item"><div class="trust-dot"></div>Invoicing & Billing</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="centered">
+    <div class="section-label">Features</div>
+    <h2 class="section-title">Everything your crew needs in one app</h2>
+    <p class="section-sub">From the first job of the day to the final invoice, TurfWize keeps your operation running smoothly.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🗺️</div>
+      <h3>Smart Route Optimization</h3>
+      <p>Automatically build the most efficient daily route for your crew. Cut drive time, save fuel, and fit more jobs in every day.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📍</div>
+      <h3>Live GPS Crew Tracking</h3>
+      <p>See exactly where every crew member is in real time. Know when jobs start, when they finish, and if anything goes off track.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🛰️</div>
+      <h3>Smart Property Maps</h3>
+      <p>Draw property boundaries and zones on satellite imagery. Mow zones, trim zones, no-mow areas, and hazard markers — all saved to each property.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✨</div>
+      <h3>AI Zone Suggestions</h3>
+      <p>Let AI analyze your property satellite image and automatically suggest mow, trim, and bed zones. One tap to accept or adjust.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📋</div>
+      <h3>Task Optimizer</h3>
+      <p>Automatically assign tasks to crew members based on property zones, crew size, and equipment. Know exactly how long each job should take.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💰</div>
+      <h3>Invoicing & Billing</h3>
+      <p>Create and send professional invoices directly from completed jobs. Track paid and outstanding balances for every client.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👥</div>
+      <h3>Crew Management</h3>
+      <p>Add crew members, assign roles, manage foremen and workers. Invite your team with a simple link — no IT setup needed.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤖</div>
+      <h3>AI Business Assistant</h3>
+      <p>Ask plain-English questions about your business. Which clients owe money? Which jobs ran over? Which crew member worked most this week?</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Performance Tracking</h3>
+      <p>Track job completion rates, revenue trends, and crew efficiency over time. Know what's working and what needs to improve.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="centered">
+    <div class="section-label">How it works</div>
+    <h2 class="section-title">Up and running in minutes</h2>
+    <p class="section-sub">No training required. TurfWize is built for people who work outside, not behind a desk.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Add your clients and properties</h3>
+      <p>Enter a client, add their property address, and draw the boundary on the satellite map. Takes under 2 minutes per property.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Schedule jobs and optimize your route</h3>
+      <p>Create jobs for the day, tap Optimize Route, and TurfWize builds the most efficient order automatically.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Dispatch your crew</h3>
+      <p>Assign crew members to each job. They see their tasks on their phone and you track progress in real time.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Invoice and get paid</h3>
+      <p>When a job is complete, generate an invoice in one tap and send it directly to your client.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AI SECTION -->
+<section class="ai-section" id="ai">
+  <div class="ai-grid">
+    <div>
+      <div class="section-label" style="color:var(--gold)">AI-Powered</div>
+      <h2 class="section-title">Your business, with an AI advisor built in</h2>
+      <p class="section-sub">TurfWize AI knows your jobs, crew, clients, and history. Ask it anything — it answers in plain English.</p>
+      <div class="ai-features">
+        <div class="ai-feature">
+          <div class="ai-feature-icon">💬</div>
+          <div>
+            <h4>AI Chat Assistant</h4>
+            <p>Ask questions about your business in plain English. Available on every screen, anytime.</p>
+          </div>
+        </div>
+        <div class="ai-feature">
+          <div class="ai-feature-icon">⚡</div>
+          <div>
+            <h4>Optimizer AI Insights</h4>
+            <p>After every route optimization, AI flags imbalances, compares to your history, and suggests improvements.</p>
+          </div>
+        </div>
+        <div class="ai-feature">
+          <div class="ai-feature-icon">🛰️</div>
+          <div>
+            <h4>Smart Zone Detection</h4>
+            <p>AI analyzes satellite imagery to suggest property zones automatically — no manual drawing required.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ai-chat-demo">
+      <div class="chat-header">
+        <div class="chat-avatar">✨</div>
+        <div>
+          <div class="chat-name">TurfWize AI</div>
+          <div class="chat-sub">Your business assistant</div>
+        </div>
+      </div>
+      <div class="chat-msg">
+        <div class="chat-bubble-user">Which invoices are overdue this month?</div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="chat-msg" style="margin-top:10px">
+        <div class="chat-bubble-ai">You have 3 overdue invoices totaling <strong>$1,847</strong>. Meadowbrook HOA owes $920 (14 days late), Anderson Residence owes $580 (7 days late), and Riverside Plaza owes $347 (3 days late). Want me to draft a follow-up email?</div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="chat-msg" style="margin-top:10px">
+        <div class="chat-bubble-user">How long did the Meadowbrook job take last month?</div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="chat-msg" style="margin-top:10px">
+        <div class="chat-bubble-ai">Last month's Meadowbrook job averaged <strong>3h 55m</strong> across 4 visits — about 35 min longer than the optimizer estimate. You may want to add one crew member or adjust the schedule.</div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="centered">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Simple, transparent pricing</h2>
+    <p class="section-sub">Start free. Upgrade when you're ready. Cancel anytime.</p>
+  </div>
+  <div class="billing-toggle">
+    <span class="toggle-opt active" id="lbl-m" onclick="setBilling('monthly')">Monthly</span>
+    <div class="toggle-switch" id="billing-switch" onclick="toggleBilling()"></div>
+    <span class="toggle-opt" id="lbl-a" onclick="setBilling('annual')">Annual &nbsp;<span class="save-pill">Save 17%</span></span>
+  </div>
+  <div class="pricing-grid">
+    <div class="plan-card">
+      <div class="plan-name">Starter</div>
+      <div class="plan-desc">Small crews getting started</div>
+      <div class="plan-price"><sup>$</sup><span id="p1">49</span><sub>/mo</sub></div>
+      <div class="plan-annual-note" id="n1">&nbsp;</div>
+      <hr class="plan-divider">
+      <div class="plan-feature"><div class="plan-check"></div>Up to 3 crew members</div>
+      <div class="plan-feature"><div class="plan-check"></div>Up to 10 properties</div>
+      <div class="plan-feature"><div class="plan-check"></div>Jobs & scheduling</div>
+      <div class="plan-feature"><div class="plan-check"></div>Invoicing & billing</div>
+      <div class="plan-feature"><div class="plan-check"></div>Route optimizer</div>
+      <div class="plan-feature"><div class="plan-check"></div>AI assistant (limited)</div>
+      <a href="#trial" class="plan-cta">Start Free Trial</a>
+    </div>
+    <div class="plan-card popular">
+      <div class="popular-badge">Most Popular</div>
+      <div class="plan-name">Growth</div>
+      <div class="plan-desc">Growing lawn care operations</div>
+      <div class="plan-price"><sup>$</sup><span id="p2">99</span><sub>/mo</sub></div>
+      <div class="plan-annual-note" id="n2">&nbsp;</div>
+      <hr class="plan-divider">
+      <div class="plan-feature"><div class="plan-check"></div>Up to 15 crew members</div>
+      <div class="plan-feature"><div class="plan-check"></div>Up to 30 properties</div>
+      <div class="plan-feature"><div class="plan-check"></div>Live GPS tracking</div>
+      <div class="plan-feature"><div class="plan-check"></div>Smart Map + AI zones</div>
+      <div class="plan-feature"><div class="plan-check"></div>Full AI assistant</div>
+      <div class="plan-feature"><div class="plan-check"></div>Optimizer AI insights</div>
+      <a href="#trial" class="plan-cta">Start Free Trial</a>
+    </div>
+    <div class="plan-card">
+      <div class="plan-name">Pro</div>
+      <div class="plan-desc">Large or multi-crew operations</div>
+      <div class="plan-price"><sup>$</sup><span id="p3">199</span><sub>/mo</sub></div>
+      <div class="plan-annual-note" id="n3">&nbsp;</div>
+      <hr class="plan-divider">
+      <div class="plan-feature"><div class="plan-check"></div>Unlimited crew members</div>
+      <div class="plan-feature"><div class="plan-check"></div>Unlimited properties</div>
+      <div class="plan-feature"><div class="plan-check"></div>All features included</div>
+      <div class="plan-feature"><div class="plan-check"></div>Priority support</div>
+      <div class="plan-feature"><div class="plan-check"></div>Performance network</div>
+      <div class="plan-feature"><div class="plan-check"></div>Custom onboarding</div>
+      <a href="#trial" class="plan-cta">Start Free Trial</a>
+    </div>
+  </div>
+  <p class="pricing-note">All plans include a 14-day free trial · No credit card required to start · <a href="#">View full feature comparison</a></p>
+</section>
+
+<!-- TRIAL CTA -->
+<section class="trial-section" id="trial">
+  <h2>Start your free 14-day trial today</h2>
+  <p>No credit card required. 1 client, 1 job site, full features. See TurfWize in action with your own business.</p>
+  <div class="trial-features">
+    <div class="trial-feature"><span class="trial-check">✓</span> No credit card required</div>
+    <div class="trial-feature"><span class="trial-check">✓</span> Full feature access</div>
+    <div class="trial-feature"><span class="trial-check">✓</span> Cancel anytime</div>
+    <div class="trial-feature"><span class="trial-check">✓</span> iOS & Android</div>
+  </div>
+  <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+    <a href="#" class="btn-primary" style="font-size:17px;padding:16px 36px">Download on the App Store</a>
+    <a href="#" class="btn-secondary" style="font-size:17px;padding:16px 36px">Get it on Google Play</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="nav-logo">
+        <div class="nav-logo-icon">T</div>
+        <span class="nav-logo-text">TurfWize</span>
+      </div>
+      <p>Smarter lawn care management for growing businesses.</p>
+      <p style="margin-top:8px">A product of Stormwater Dynamic Solutions LLC</p>
+    </div>
+    <div class="footer-links">
+      <h4>Product</h4>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#how">How it works</a>
+      <a href="#ai">AI features</a>
+    </div>
+    <div class="footer-links">
+      <h4>Legal</h4>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+    </div>
+    <div class="footer-links">
+      <h4>Contact</h4>
+      <a href="mailto:support@turfwize.com">support@turfwize.com</a>
+      <a href="mailto:jay@stormwaterdynamicsolutions.com">jay@stormwaterdynamicsolutions.com</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Stormwater Dynamic Solutions LLC. All rights reserved.</p>
+    <p>TurfWize is a trademark of Stormwater Dynamic Solutions LLC</p>
+  </div>
+</footer>
+
+<script>
+let isAnnual = false;
+const monthly = [49, 99, 199];
+const annual = [41, 82, 165];
+const annualTotal = [492, 984, 1980];
+
+function updatePrices() {
+  const prices = isAnnual ? annual : monthly;
+  [1,2,3].forEach(function(i) {
+    document.getElementById('p'+i).textContent = prices[i-1];
+    document.getElementById('n'+i).textContent = isAnnual
+      ? '$'+annualTotal[i-1]+' billed annually'
+      : 'billed monthly, cancel anytime';
+  });
+  document.getElementById('lbl-m').classList.toggle('active', !isAnnual);
+  document.getElementById('lbl-a').classList.toggle('active', isAnnual);
+  document.getElementById('billing-switch').classList.toggle('annual', isAnnual);
+}
+
+function toggleBilling() { isAnnual = !isAnnual; updatePrices(); }
+function setBilling(type) { isAnnual = (type === 'annual'); updatePrices(); }
+</script>
+</body>
+</html>
