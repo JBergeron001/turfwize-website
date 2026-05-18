@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TurfWize &mdash; Customer Support</title>
+<meta name="description" content="Get help with TurfWize. Select your issue and we'll get back to you quickly.">
+<style>
+  :root {
+    --green-dark: #1a4a1a;
+    --green-main: #2a6b2a;
+    --green-mid: #3a8a3a;
+    --green-light: #e8f5e8;
+    --gold: #f5c518;
+    --white: #ffffff;
+    --off-white: #f9fafb;
+    --text: #1a1a1a;
+    --text-mid: #444;
+    --text-light: #777;
+    --border: #e0e0e0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); background: var(--off-white); }
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--green-dark);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    border-bottom: 2px solid var(--green-main);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--green-main);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 900; color: var(--gold); font-family: Georgia, serif;
+  }
+  .nav-logo-text { font-size: 20px; font-weight: 700; color: white; letter-spacing: -0.5px; }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+  .nav-links a:hover { color: white; }
+  .nav-cta {
+    background: var(--gold); color: var(--green-dark);
+    padding: 8px 20px; border-radius: 6px;
+    font-weight: 700; font-size: 14px; text-decoration: none;
+  }
+  .nav-cta:hover { background: #e6b800; }
+  .hero {
+    background: var(--green-dark);
+    padding: 56px 5% 64px;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(245,197,24,0.15);
+    border: 1px solid rgba(245,197,24,0.4);
+    color: var(--gold);
+    font-size: 12px; font-weight: 600;
+    padding: 4px 14px; border-radius: 20px;
+    margin-bottom: 18px; letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .hero h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; color: white; margin-bottom: 14px; line-height: 1.2; }
+  .hero p { font-size: 16px; color: rgba(255,255,255,0.75); max-width: 520px; margin: 0 auto; line-height: 1.6; }
+  main { max-width: 680px; margin: 0 auto; padding: 48px 20px 80px; }
+  .form-card {
+    background: var(--white); border-radius: 16px; padding: 40px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08); border: 1px solid var(--border);
+  }
+  .form-card h2 { font-size: 22px; font-weight: 700; color: var(--green-dark); margin-bottom: 6px; }
+  .form-intro { font-size: 14px; color: var(--text-light); margin-bottom: 28px; line-height: 1.5; }
+  .form-group { margin-bottom: 20px; }
+  label { display: block; font-size: 13px; font-weight: 600; color: var(--text-mid); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.4px; }
+  input[type="text"], input[type="email"], select, textarea {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border);
+    border-radius: 8px; font-size: 15px; font-family: inherit; color: var(--text);
+    background: var(--white); transition: border-color 0.2s;
+    appearance: none; -webkit-appearance: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none; border-color: var(--green-main);
+    box-shadow: 0 0 0 3px rgba(42,107,42,0.1);
+  }
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23777' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+    padding-right: 40px; cursor: pointer;
+  }
+  textarea { resize: vertical; min-height: 110px; line-height: 1.5; }
+  .role-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .role-btn {
+    flex: 1; min-width: 100px; padding: 10px 14px;
+    border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--white); font-size: 13px; font-weight: 600;
+    color: var(--text-mid); cursor: pointer; text-align: center;
+    transition: all 0.2s; font-family: inherit;
+  }
+  .role-btn:hover { border-color: var(--green-main); color: var(--green-main); }
+  .role-btn.active { border-color: var(--green-main); background: var(--green-light); color: var(--green-dark); }
+  .submit-btn {
+    width: 100%; padding: 14px; background: var(--green-main); color: white;
+    border: none; border-radius: 8px; font-size: 16px; font-weight: 700;
+    cursor: pointer; transition: background 0.2s; margin-top: 8px; font-family: inherit;
+  }
+  .submit-btn:hover { background: var(--green-dark); }
+  .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
+  .success-box {
+    display: none; background: var(--green-light);
+    border: 1.5px solid var(--green-main); border-radius: 12px;
+    padding: 32px; text-align: center;
+  }
+  .success-box .check {
+    width: 56px; height: 56px; background: var(--green-main); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px; font-size: 24px; color: white;
+  }
+  .success-box h3 { font-size: 20px; color: var(--green-dark); margin-bottom: 8px; }
+  .success-box p { font-size: 14px; color: var(--text-mid); line-height: 1.6; }
+  .back-link { display: inline-block; margin-top: 16px; color: var(--green-main); font-weight: 600; font-size: 14px; text-decoration: none; cursor: pointer; }
+  .back-link:hover { text-decoration: underline; }
+  .faq-section { margin-top: 48px; }
+  .faq-section h2 { font-size: 20px; font-weight: 700; color: var(--green-dark); margin-bottom: 20px; }
+  .faq-item { background: var(--white); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+  .faq-q {
+    width: 100%; padding: 16px 20px; background: none; border: none;
+    text-align: left; font-size: 15px; font-weight: 600; color: var(--text);
+    cursor: pointer; display: flex; justify-content: space-between;
+    align-items: center; font-family: inherit;
+  }
+  .faq-q:hover { background: var(--green-light); }
+  .faq-arrow { font-size: 12px; color: var(--text-light); transition: transform 0.2s; }
+  .faq-a { display: none; padding: 14px 20px 16px; font-size: 14px; color: var(--text-mid); line-height: 1.6; border-top: 1px solid var(--border); }
+  .faq-item.open .faq-a { display: block; }
+  .faq-item.open .faq-arrow { transform: rotate(180deg); }
+  footer { background: var(--green-dark); color: rgba(255,255,255,0.6); text-align: center; padding: 28px 5%; font-size: 13px; }
+  footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+  footer a:hover { color: white; }
+  @media (max-width: 600px) { .form-card { padding: 24px 18px; } .nav-links { display: none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-icon">T</div>
+    <span class="nav-logo-text">TurfWize</span>
+  </a>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+    <a href="/support.html" style="color:white;font-weight:600;">Support</a>
+  </div>
+  <a href="/" class="nav-cta">Get the App</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">Help Center</div>
+  <h1>Customer Support</h1>
+  <p>Having trouble with TurfWize? Tell us what's going on and we'll get back to you as soon as possible.</p>
+</div>
+
+<main>
+  <div class="form-card" id="form-card">
+    <h2>Submit a Support Request</h2>
+    <p class="form-intro">Fill out the form below. We typically respond within one business day.</p>
+
+    <form id="support-form" action="https://formspree.io/f/mzdwbrlr" method="POST">
+      <input type="hidden" name="_subject" value="TurfWize App Support Request">
+      <input type="hidden" name="_replyto" id="reply-to-field">
+
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="Full name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="your@email.com" required
+          oninput="document.getElementById('reply-to-field').value=this.value">
+      </div>
+
+      <div class="form-group">
+        <label>Your Role in the App</label>
+        <div class="role-row">
+          <button type="button" class="role-btn active" data-role="Owner / Manager" onclick="selectRole(this)">Owner / Manager</button>
+          <button type="button" class="role-btn" data-role="Foreman" onclick="selectRole(this)">Foreman</button>
+          <button type="button" class="role-btn" data-role="Crew Member" onclick="selectRole(this)">Crew Member</button>
+        </div>
+        <input type="hidden" name="role" id="role-input" value="Owner / Manager">
+      </div>
+
+      <div class="form-group">
+        <label for="issue">Issue Type</label>
+        <select id="issue" name="issue_type" required>
+          <option value="" disabled selected>Select the issue you are experiencing...</option>
+          <optgroup label="Account and Login">
+            <option>Cannot log in to the app</option>
+            <option>Forgot or need to reset my PIN</option>
+            <option>Invited crew member cannot accept invite</option>
+            <option>Account locked or access denied</option>
+          </optgroup>
+          <optgroup label="Jobs and Scheduling">
+            <option>Job not showing on schedule</option>
+            <option>Cannot create or edit a job</option>
+            <option>Job status not updating correctly</option>
+            <option>Schedule not loading or spinning</option>
+          </optgroup>
+          <optgroup label="Smart Map and Zones">
+            <option>Smart Map not building or loading</option>
+            <option>Zone boundaries not saving</option>
+            <option>AI Zones not generating suggestions</option>
+            <option>Map showing wrong location</option>
+          </optgroup>
+          <optgroup label="Task Optimizer">
+            <option>Optimizer not running or returning error</option>
+            <option>Crew assignments look incorrect</option>
+            <option>Time estimates seem wrong</option>
+          </optgroup>
+          <optgroup label="GPS and Tracking">
+            <option>GPS tracking not working</option>
+            <option>Team map not showing crew locations</option>
+            <option>Route optimizer not showing directions</option>
+          </optgroup>
+          <optgroup label="Billing and Invoices">
+            <option>Cannot create an invoice</option>
+            <option>Payment or subscription issue</option>
+            <option>CSV export not working</option>
+          </optgroup>
+          <optgroup label="Equipment and Performance">
+            <option>Equipment not saving correctly</option>
+            <option>Performance stats not loading</option>
+            <option>Fuel price not updating</option>
+          </optgroup>
+          <optgroup label="Crew Management">
+            <option>Cannot add or remove a crew member</option>
+            <option>Crew member permissions not working</option>
+            <option>Hourly rate not saving</option>
+          </optgroup>
+          <optgroup label="App General">
+            <option>App crashing or freezing</option>
+            <option>App running slow or not loading</option>
+            <option>Language toggle not working</option>
+            <option>Something looks broken or wrong</option>
+            <option>Feature request or suggestion</option>
+            <option>Other issue not listed above</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Describe the Issue</label>
+        <textarea id="description" name="description"
+          placeholder="Tell us what happened, what you expected, and any steps that led to the issue. The more detail, the faster we can help."
+          required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="device">Device (optional)</label>
+        <input type="text" id="device" name="device" placeholder="e.g. Samsung Galaxy S23, iPhone 14">
+      </div>
+
+      <button type="submit" class="submit-btn" id="submit-btn">Send Support Request</button>
+    </form>
+
+    <div class="success-box" id="success-box">
+      <div class="check">&#10003;</div>
+      <h3>Request Received</h3>
+      <p>Thank you for reaching out. Our team will review your issue and get back to you within one business day.</p>
+      <span class="back-link" id="back-link">Submit another request</span>
+    </div>
+  </div>
+
+  <div class="faq-section">
+    <h2>Common Questions</h2>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How do I reset my PIN? <span class="faq-arrow">&#9660;</span></button>
+      <div class="faq-a">Ask your manager or owner to tap your name in the Crew screen and send you a new invite link. Tapping the link lets you set a new PIN.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Why is the Smart Map not building? <span class="faq-arrow">&#9660;</span></button>
+      <div class="faq-a">Make sure the property boundary has been drawn without any crossing lines. If lines overlap, tap any pin while drawing to remove it and redraw cleanly, then tap Build Smart Map again.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Why is the Task Optimizer spinning and not loading? <span class="faq-arrow">&#9660;</span></button>
+      <div class="faq-a">The optimizer requires both a Smart Map and at least one crew member assigned to the job. Check the Readiness Check section at the top of the optimizer screen.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">A crew member says their invite link is not working. <span class="faq-arrow">&#9660;</span></button>
+      <div class="faq-a">Invite links expire after 7 days. Go to the Crew screen, tap the crew member, and tap Invite to send a fresh link.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How do I cancel or change my subscription? <span class="faq-arrow">&#9660;</span></button>
+      <div class="faq-a">Go to Settings and then Billing and Plans in the app to view and manage your subscription. If you need further help, submit a support request above.</div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2026 TurfWize &mdash; <a href="/privacy.html">Privacy Policy</a> &middot; <a href="/terms.html">Terms of Service</a> &middot; <a href="/support.html">Support</a></p>
+</footer>
+
+<script>
+  function selectRole(btn) {
+    document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('role-input').value = btn.dataset.role;
+  }
+
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  const form = document.getElementById('support-form');
+  const submitBtn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        form.style.display = 'none';
+        document.getElementById('success-box').style.display = 'block';
+        document.getElementById('back-link').addEventListener('click', function() {
+          form.reset();
+          form.style.display = 'block';
+          document.getElementById('success-box').style.display = 'none';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Support Request';
+          document.querySelectorAll('.role-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
+          document.getElementById('role-input').value = 'Owner / Manager';
+        });
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Support Request';
+        alert('Something went wrong. Please try again.');
+      }
+    } catch(err) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Support Request';
+      alert('Network error. Please check your connection and try again.');
+    }
+  });
+</script>
+
+</body>
+</html>
